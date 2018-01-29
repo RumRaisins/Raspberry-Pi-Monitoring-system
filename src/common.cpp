@@ -4,7 +4,31 @@
 *返回套接字描述符，错误返回-1
 */
 
-int socket_create(int port){
+Common::Common(const char *path){
+	ifstream infile(path);
+	if(!infile){
+		throw runtime_error("No config");
+	}
+	string line ,key , value;
+	while(getline(infile , line)){
+		if(line.empty()) continue;
+		int start_pos = 0 , end_pos = line.size() -1 , pos;
+		if((pos = line.find('#')) != -1){
+			if(0 == pos){
+				continue;
+			}
+			end_pos = pos -1;
+		}
+		string new_line = line.substr(start_pos , start_pos + 1 - end_pos);
+
+		if((pos = new_line.find('=')) == -1) continue;
+		key = new_line.substr(0 , pos);
+		value = new_line.substr(pos + 1 , end_pos + 1- (pos + 1));
+		this->parameters[key] = value;
+	}
+}
+
+int Common::socket_create(int port){
 	int sockfd;
 	int yes = 1;
 	struct sockaddr_in sock_addr;
@@ -43,12 +67,44 @@ int socket_create(int port){
 	return sockfd;
 }
 
+void Common::state_to_char(int state,char* result){
+	switch(state){
+		case 100:
+			memset(result , 0 , sizeof(result));
+			strcpy(result , ",cpu.log");
+			break;
+		case 101:
+			memset(result , 0 , sizeof(result));
+			strcpy(result , ",mem.log");
+			break;
+		case 102:
+			memset(result , 0 , sizeof(result));
+			strcpy(result , ",disk.log");
+			break;
+		case 103:
+			memset(result , 0 , sizeof(result));
+			strcpy(result , ",/proc.log");
+			break;
+		case 104:
+			memset(result , 0 , sizeof(result));
+			strcpy(result , ",/sysinfo.log");
+			break;
+		case 105:
+			memset(result , 0 , sizeof(result));
+			strcpy(result , ",/users.log");
+			break;
+		default:
+			result = nullptr;
+			throw runtime_error("No this state\n");
+	}
+}
+
 
 /*
 *接受套接字请求
 *返回新的套接字描述符，错误返回-1
 */
-int socket_accept(int sock_listen) {
+int Common::socket_accept(int sock_listen) {
 	int sockfd;
 	struct sockaddr_in client_addr;
 	socklen_t len = sizeof(client_addr); 
@@ -66,7 +122,7 @@ int socket_accept(int sock_listen) {
 *返回新的套接字描述符，错误返回-1
 */
 
-int socket_connect(int port, char *host) {
+int Common::socket_connect(int port, const char *host) {
 	int sockfd;
 	struct sockaddr_in dest_addr;
 
@@ -89,3 +145,4 @@ int socket_connect(int port, char *host) {
 	return sockfd;
 
 }
+
