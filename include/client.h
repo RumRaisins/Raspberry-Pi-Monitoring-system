@@ -17,7 +17,7 @@ public:
 
 	int start();
 
-	int send_file(const char* filename , int state);
+	int send_file(const char* filename , int state , int control_port);
 
 private:
 	

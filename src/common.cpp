@@ -71,27 +71,27 @@ void Common::state_to_char(int state,char* result){
 	switch(state){
 		case 100:
 			memset(result , 0 , sizeof(result));
-			strcpy(result , ",cpu.log");
+			strcpy(result , "/cpu.log");
 			break;
 		case 101:
 			memset(result , 0 , sizeof(result));
-			strcpy(result , ",mem.log");
+			strcpy(result , "/mem.log");
 			break;
 		case 102:
 			memset(result , 0 , sizeof(result));
-			strcpy(result , ",disk.log");
+			strcpy(result , "/disk.log");
 			break;
 		case 103:
 			memset(result , 0 , sizeof(result));
-			strcpy(result , ",/proc.log");
+			strcpy(result , "/proc.log");
 			break;
 		case 104:
 			memset(result , 0 , sizeof(result));
-			strcpy(result , ",/sysinfo.log");
+			strcpy(result , "/sysinfo.log");
 			break;
 		case 105:
 			memset(result , 0 , sizeof(result));
-			strcpy(result , ",/users.log");
+			strcpy(result , "/users.log");
 			break;
 		default:
 			result = nullptr;

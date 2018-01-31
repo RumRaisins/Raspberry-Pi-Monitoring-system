@@ -44,6 +44,7 @@ public:
 	inline int recv_response(int sockfd , int check){
 		int res_recv;
 		if(recv(sockfd , &res_recv , sizeof(res_recv) , 0) < 0 || check != res_recv){
+			printf("recv = %d\n" , res_recv);
 			perror("recv_respons error");
 			return -1;
 		}

@@ -43,12 +43,15 @@ int Master::receive_from_client(map<string , string>::iterator client){
 	char p[10];
 	for(int state = 100 ; state < 106 ; state++){
 		sed_seponse(sock_con , state);
-		if(recv_response(sock_con , state+100) != 0){
+		if(recv_response(sock_con , state + 100) != 0){
 			debugError(state + 300);
-			break;
+			continue;
 		}
 		state_to_char(state , p);
 		writefile( client->second, this->writepath + client->first , p);	
+		if(recv_response(sock_con , state+300) != 0){
+			debugError(state + 300);
+		}
 	}	
 
 
@@ -58,9 +61,9 @@ int Master::receive_from_client(map<string , string>::iterator client){
 int Master::writefile(const string& client_ip,const string& file_path , const char *name ){
 
 	
-	printf("start port %d\n , ready for data" , 8732);
+	printf("start port %d , ready for data\n" , 8851);
 
-	int sock_con = socket_connect(8732 , client_ip.c_str());
+	int sock_con = socket_connect(8851 , client_ip.c_str());
 
 
    if(access(file_path.c_str(),0)==-1)//access函数是查看文件是不是存在
@@ -71,8 +74,8 @@ int Master::writefile(const string& client_ip,const string& file_path , const ch
             printf("creat file bag failed!!!");
         }
     }
-    int state = 1;
-    send(sock_con, &state ,sizeof(state),0); 
+    int ack = 1;
+    send(sock_con, &ack,sizeof(ack),0); 
 
 
 	char data[MAX_CHAR_SIZE];
@@ -81,22 +84,19 @@ int Master::writefile(const string& client_ip,const string& file_path , const ch
 	FILE *fd = fopen((file_path + name).c_str(),"wt+");
 	while((size = recv(sock_con , data , 1024 , 0)) > 0 ){
 
-		std::cout << data << std::endl;
+		printf("%s" ,data);
+
 		fwrite(data , 1 , size , fd);
-
-		//fwrite("\n" , 1 , sizeof("\n") , fd);
-
-
 		memset(data , 0 , sizeof(data));
 	}	
 
 	if(size < 0)
 		perror("write file error\n");
 	if(size == 0){
-		printf("recervice success!");
+		printf("recervice success!\n");
 	}
-	fclose(fd);
 
+	fclose(fd);
 	close(sock_con);
 
 	return 0;
