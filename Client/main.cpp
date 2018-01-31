@@ -3,8 +3,9 @@
 
 int main(){
 	Client a("../Client/client.conf");
+
 	printf("start\n");
-	
+
 	a.start();
 
 

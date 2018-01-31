@@ -20,15 +20,8 @@ public:
 	
     int writefile(const string& client_ip,const string& file_path , const char *name );
 
-	void debugError(int state){
-		switch(state){
-			case 400 : printf("CPU FILE NOT FOUND\n"); break;
-			case 401 : printf("MEN FILE NOT FOUND\n"); break;
-			case 402 : printf("DISK FILE NOT FOUND\n"); break;
-			case 403 : printf("PRO FILE NOT FOUND\n"); break;
-			case 404 : printf("SYSINFO FILE NOT FOUND\n"); break;
-			case 405 : printf("USERINFO FILE NOT FOUND\n"); break;
-		}
+	inline void debugERROR( const char *file , const char *error){
+		printf("%s %s\n" , file , error);
 	}
 
 
@@ -45,7 +38,6 @@ public:
 		int res_recv;
 		if(recv(sockfd , &res_recv , sizeof(res_recv) , 0) < 0 || check != res_recv){
 			printf("recv = %d\n" , res_recv);
-			perror("recv_respons error");
 			return -1;
 		}
 		return 0;

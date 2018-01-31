@@ -85,6 +85,17 @@ using std::ifstream;
 #define MAX_CHAR_SIZE 1024
 
 
+#ifdef DEBUG
+#define log(frm , arg...){\
+	printf(frm , ##arg);\
+}
+#else 
+#define log(frm , arg...){\
+}
+
+#endif
+
+
 
 class Common{
 public:
