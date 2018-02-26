@@ -28,7 +28,7 @@ for (( i = 1; i <= $parnum; i++ )); do
 	LeftSum=$[ $LeftSum + ${parleft[$i]} ]
 done
 UsedPercSum=$[ (100-$LeftSum*100/$DiskSum) ]
-echo "$NowTime 0 disk $DiskSum $LeftSum ${UsedPercSum}%" >>$DiskLog
+echo "$NowTime 0 disk $DiskSum $LeftSum ${UsedPercSum}%" >> $DiskLog
 
 
 

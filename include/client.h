@@ -16,8 +16,10 @@ public:
 	Client(const char *path) : Common(path) {init();}
 
 	int start();
-
+	int send_control(int state , int control_port);
 	int send_file(const char* filename , int state , int control_port);
+
+	int updataShell();
 
 private:
 	

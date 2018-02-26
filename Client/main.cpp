@@ -6,8 +6,8 @@ int main(){
 
 	printf("start\n");
 
-	a.start();
-
-
+	//a.start();
+	a.updataShell();
+	//return a.updata();
 	return 0;
 }

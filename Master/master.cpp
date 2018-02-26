@@ -28,6 +28,7 @@ int Master::start(){
 		if(pid == 0){
 			receive_from_client(client);
 			flag = 0;
+			sleep(10);
 			break;
 		}else{
 			log("pid = %d solve %s\n" , pid , client->second.c_str() );
