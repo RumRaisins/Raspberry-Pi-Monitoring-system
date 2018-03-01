@@ -24,11 +24,15 @@ eval $(df -T -m -x tmpfs -x devtmpfs | tail -n +2 | \
 for (( i = 1; i <= $parnum; i++ )); do
 	echo "$NowTime 1 ${parname[$i]} ${paramount[$i]} ${parleft[$i]}\
 	 ${usedperc[$i]}">>$DiskLog
+#	echo "$NowTime 1 ${parname[$i]} ${paramount[$i]} ${parleft[$i]}\
+#	 ${usedperc[$i]}"
 	DiskSum=$[ $DiskSum + ${paramount[$i]} ]
 	LeftSum=$[ $LeftSum + ${parleft[$i]} ]
 done
 UsedPercSum=$[ (100-$LeftSum*100/$DiskSum) ]
 echo "$NowTime 0 disk $DiskSum $LeftSum ${UsedPercSum}%" >> $DiskLog
+#echo "$NowTime 0 disk $DiskSum $LeftSum ${UsedPercSum}%"
+
 
 
 

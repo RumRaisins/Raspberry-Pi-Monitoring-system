@@ -8,7 +8,7 @@ all:
 master:
 	g++ -g -std=c++11  ./Master/*.cpp ./src/*.cpp -o $(MASTERTARGET) -I ./include
 client:
-	g++ -g -std=c++11  ./Client/*.cpp ./src/*.cpp -o $(CILENTTARGET) -I ./include 
+	g++ -g -std=c++11  ./Client/*.cpp ./src/*.cpp -o $(CILENTTARGET) -I ./include -lpthread 
 clean:
 	rm -rf $(CLIENTTARGET)
 	rm -rf $(MASTERTARGET)

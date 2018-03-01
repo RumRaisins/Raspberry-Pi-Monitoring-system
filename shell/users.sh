@@ -39,8 +39,8 @@ fi
 
 UserLogedIn=`w -h | awk '{printf(",%s_%s_%s",$1,$3,$2)}' | cut -c 2-`
 
+#echo "$NowTime $UserNum [${MostActiveUser}] [${UserWithRoot}] [${UserLogedIn}]"
 echo "$NowTime $UserNum [${MostActiveUser}] [${UserWithRoot}] [${UserLogedIn}]" >> $UsersLog
-
 
 
 

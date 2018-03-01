@@ -20,20 +20,22 @@ public:
 	
     int writefile(const string& client_ip,const string& file_path , const char *name );
 
+    //string whosendme(int);
+
 	inline void debugERROR( const char *file , const char *error){
 		printf("%s %s\n" , file , error);
 	}
 
 
-	inline int sed_seponse(int master_request , int req){
 
+
+	inline int sed_seponse(int master_request , int req){
 		if(send(master_request , &req , sizeof(req) , 0) < 0){
 			perror("send error");
 			return -1;
 		}
 		return 0;
 	}
-
 	inline int recv_response(int sockfd , int check){
 		int res_recv;
 		if(recv(sockfd , &res_recv , sizeof(res_recv) , 0) < 0 || check != res_recv){

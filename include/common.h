@@ -73,13 +73,20 @@
 #include <string>
 #include <map>
 #include <iostream>
-#include<fstream>
+#include <fstream>
+#include <algorithm> 
+
 
 #include <sys/stat.h>
+
+
+
+
 using std::map;
 using std::runtime_error;
 using std::string;
 using std::ifstream;
+using std::string;
 
 
 #define MAX_CHAR_SIZE 1024

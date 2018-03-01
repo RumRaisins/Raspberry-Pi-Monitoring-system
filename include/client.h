@@ -8,18 +8,30 @@
 #ifndef _CLIENT_H
 #define _CLIENT_H
 
+#include <pthread.h>
+#include <unistd.h>
+
 #include "common.h"
+
+
+
+
+
+void* updataShell(void *arg);
+
+
+
 
 class Client : public Common{
 public:
 	Client(string path) : Common(path.c_str()) {init();}
 	Client(const char *path) : Common(path) {init();}
 
+	static void *updataShell(void *arg);
+
 	int start();
 	int send_control(int state , int control_port);
 	int send_file(const char* filename , int state , int control_port);
-
-	int updataShell();
 
 private:
 	
@@ -27,6 +39,18 @@ private:
 	int Master_data_port;
 	string Master_ip;
 	string readpath;
+
+	//1被占用  0未被占用
+	static int sign;
+
+	inline static void lock(){
+		while(__sync_lock_test_and_set(&sign,1)){}
+	}
+
+	inline static void unlock(){
+		__sync_lock_release(&sign);
+	}
+
 
 	inline void init(){
 		auto temp = this->parameters.find("port");

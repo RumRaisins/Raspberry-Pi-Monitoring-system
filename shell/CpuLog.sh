@@ -40,6 +40,7 @@ elif [[ `echo $CpuTemp '>=' 50 | bc -l` = 1 ]]; then
 fi
 
 echo "$NowTime $LoadAvg $CpuUsedPerc ${CpuTemp}°C $WarnLevel" >> $CpuLog
+#echo "$NowTime $LoadAvg $CpuUsedPerc ${CpuTemp}°C $WarnLevel"
 
 
 

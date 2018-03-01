@@ -9,34 +9,36 @@
 
 int Master::start(){
 	string client_name = "client";
-	int num = 0;
+	
 	int client_num = -1;
 	auto client_num_s = this->parameters.find("client_num");
 	if(client_num_s != this->parameters.end()){
 		client_num = atoi(client_num_s->second.c_str());
 	}
-	bool flag = 1;
-	while(flag){
-		auto client = this->parameters.find(client_name + (char )('1' + num));
-		if(client == parameters.end()){
-			printf("Num of Client is \n");
-			if(client_num > 0){
-				printf("Num of Client is %d in config\n" , num);
-			}		
+	while(1){
+		bool flag = 1;
+		int num = 0;
+		while(flag){
+			auto client = this->parameters.find(client_name + (char )('1' + num));
+			if(client == parameters.end()){
+				printf("Num of Client is \n");
+				if(client_num > 0){
+					printf("Num of Client is %d in config\n" , num);
+				}		
+			}
+			int pid = fork();
+			if(pid == 0){
+				receive_from_client(client);
+				flag = 0;
+				return 0;
+			}else{
+				log("pid = %d solve %s\n" , pid , client->second.c_str() );
+			}
+			if(num++ > client_num){
+				flag = 0;
+			}
 		}
-		int pid = fork();
-		if(pid == 0){
-			receive_from_client(client);
-			flag = 0;
-			sleep(10);
-			break;
-		}else{
-			log("pid = %d solve %s\n" , pid , client->second.c_str() );
-		}
-		if(num++ > client_num){
-			flag = 0;
-		}
-
+		sleep(5);
 	}
 	return 0;
 }
@@ -111,7 +113,40 @@ int Master::writefile(const string& client_ip,const string& file_path , const ch
 
 	return 0;
 }
+/*
+string  Master::whosendme(int sockaccept){
+	sockaddr_in peer;
+	socklen_t peer_t;
 
+	bzero(&peer , sizeof(peer));
+	getpeername(sockaccept , (sockaddr *)&peer , &peer_t);
+
+	char buff_peer[64]  = {'\0'};
+
+    if (inet_ntop(AF_INET, (void *)&peer.sin_addr, buff_peer, 63))
+    {
+        std::cout << "\npeer  ip: "      << buff_peer
+                  << "\tpeer port: "  << ntohs(peer.sin_port);
+    }
+    
+    std::string target = ntohs(peer.sin_port);
+
+    auto find_item = std::find_if(this->parameters.begin(), this->parameters.end(),
+        [target](const std::map<string, string>::value_type item)
+    {
+        return item.second == target;
+    });
+
+    if (find_item!= this->parameters.end())
+    {
+        return (*find_item).first;
+    }else{
+    	printf("No %s is blone client" , target.c_str());
+    	return nullptr;
+    }
+    
+}
+*/
 
 
 	

@@ -70,3 +70,7 @@ fi
 echo "$NowTime $HostName $OsType $KernelVersion $UpTime $LoadAvg \
 $DiskSum ${DiskUsedPercSum}% $MemSum ${MemUsedPerc}% $CpuTemp $DiskWarningLevel \
 $MemWarningLevel $CpuWarnLevel" >> $SysInfoLog
+
+#echo "$NowTime $HostName $OsType $KernelVersion $UpTime $LoadAvg \
+#$DiskSum ${DiskUsedPercSum}% $MemSum ${MemUsedPerc}% $CpuTemp $DiskWarningLevel \
+#$MemWarningLevel $CpuWarnLevel"
