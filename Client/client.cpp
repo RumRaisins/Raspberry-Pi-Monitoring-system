@@ -22,7 +22,7 @@ void *Client::updataShell(void *arg){
 		}
 		Client::lock();
 		while(nullptr != fgets(buff , sizeof(buff), fstream)){
-			printf("bash %s" , buff);
+			log("bash %s" , buff);
 			system((dir + buff).c_str());
 			memset(buff , 0 , sizeof(buff));
 		}
@@ -75,7 +75,7 @@ int Client::start(){
 						break;
 					case 911:
 						//退出Client 
-						log("shut down!\n");
+						printf("shut down!\n");
 						flag = 0;
 					break;
 			}	
@@ -88,36 +88,6 @@ int Client::start(){
 }
 
 
-/*
-int  Client::updataShell(){
-	char result[50][1024];
-	int index = 0;
-	FILE *filestream = nullptr;
-	FILE *shellstream = nullptr;
-	char file_buff[1024];
-	char shell_buff[1024];
-	const string dir = "../shell/";
-	if(nullptr == (filestream = popen("ls ../shell" ,"r"))){
-		throw runtime_error("No shell in ../shell\n");
-		return -1;
-	}
-
-	while(nullptr != fgets(file_buff , sizeof(file_buff), filestream)){
-		printf("bash %s" , file_buff);
-		shellstream = popen((dir + file_buff).c_str() , "r");
-		memset(file_buff , 0 , sizeof(file_buff));
-		while(nullptr != fgets(result[index] , sizeof(result[index]) , shellstream)){
-			index++;
-		}
-		pclose(shellstream);
-	}
-	for(int i = 0 ; i < index ; ++i){
-		printf("%s" , result[i]);
-	}
-	pclose(filestream);
-	return 0;
-}
-*/
 
 
 

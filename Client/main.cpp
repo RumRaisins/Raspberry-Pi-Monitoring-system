@@ -2,16 +2,7 @@
 
 
 int main(){
-	Client a("../Client/client.conf");
-
-	printf("start\n");
-
-	
-
+	Client a("/home/zhu1/Project/Internet/Client/client.conf");
 	a.start();
-
-	
-	//a.updataShell(nullptr);
-	//return a.updata();
 	return 0;
 }

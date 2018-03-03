@@ -21,9 +21,9 @@ int Master::start(){
 		while(flag){
 			auto client = this->parameters.find(client_name + (char )('1' + num));
 			if(client == parameters.end()){
-				printf("Num of Client is \n");
+				log("Num of Client is %d\n" , num);
 				if(client_num > 0){
-					printf("Num of Client is %d in config\n" , num);
+					log("Num of Client is %d in config\n" , num);
 				}		
 			}
 			int pid = fork();
@@ -45,7 +45,6 @@ int Master::start(){
 
 
 int Master::receive_from_client(map<string , string>::iterator client){
-	//printf("connect user port = %d, ip = %s\n" , this->port , client->second.c_str());
 	int sock_con = socket_connect(this->port , client->second.c_str());
 	if(sock_con < 0) {
 		printf("%s connect failed\n" , client->first.c_str());
@@ -113,41 +112,5 @@ int Master::writefile(const string& client_ip,const string& file_path , const ch
 
 	return 0;
 }
-/*
-string  Master::whosendme(int sockaccept){
-	sockaddr_in peer;
-	socklen_t peer_t;
 
-	bzero(&peer , sizeof(peer));
-	getpeername(sockaccept , (sockaddr *)&peer , &peer_t);
-
-	char buff_peer[64]  = {'\0'};
-
-    if (inet_ntop(AF_INET, (void *)&peer.sin_addr, buff_peer, 63))
-    {
-        std::cout << "\npeer  ip: "      << buff_peer
-                  << "\tpeer port: "  << ntohs(peer.sin_port);
-    }
-    
-    std::string target = ntohs(peer.sin_port);
-
-    auto find_item = std::find_if(this->parameters.begin(), this->parameters.end(),
-        [target](const std::map<string, string>::value_type item)
-    {
-        return item.second == target;
-    });
-
-    if (find_item!= this->parameters.end())
-    {
-        return (*find_item).first;
-    }else{
-    	printf("No %s is blone client" , target.c_str());
-    	return nullptr;
-    }
-    
-}
-*/
-
-
-	
 
